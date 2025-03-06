@@ -1,7 +1,7 @@
 import streamlit as st
-import joblib  # For loading the .pkl model
 import numpy as np
 from catboost import CatBoostRegressor  # Import CatBoostRegressor
+import joblib  # For loading the .pkl model
 
 # Streamlit UI
 st.title("CatBoost Model Loader and Predictor")
