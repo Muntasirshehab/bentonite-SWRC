@@ -6,16 +6,14 @@ from catboost import CatBoostRegressor  # Import CatBoostRegressor
 # Streamlit UI
 st.title("CatBoost Model Loader and Predictor")
 
-# File uploader for .pkl model
-uploaded_file = st.file_uploader("Upload your CatBoost Model (.pkl)", type=["pkl"])
-
-if uploaded_file is not None:
-    # Load the model
-    model = joblib.load(uploaded_file)
+# Load the model from the GitHub repository directory
+model_path = "best_model.pkl"  # Make sure this matches your file name
+try:
+    model = joblib.load(model_path)
 
     # Check if the loaded model is a CatBoostRegressor
     if not isinstance(model, CatBoostRegressor):
-        st.error("Uploaded model is not a CatBoostRegressor! Please upload a valid .pkl file.")
+        st.error("Loaded model is not a CatBoostRegressor! Please check your .pkl file.")
     else:
         st.success("Model successfully loaded!")
 
@@ -52,3 +50,6 @@ if uploaded_file is not None:
             # Display the prediction
             st.subheader("Prediction:")
             st.write(f"**Water content:** {prediction[0]}")
+
+except FileNotFoundError:
+    st.error("Model file not found! Make sure 'best_model.pkl' exists in the app directory.")
