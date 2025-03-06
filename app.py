@@ -1,6 +1,7 @@
 import streamlit as st
-from catboost import CatBoostRegressor  # Import CatBoostRegressor
+import joblib  # For loading the .pkl model
 import numpy as np
+from catboost import CatBoostRegressor  # Import CatBoostRegressor
 
 # Streamlit UI
 st.title("CatBoost Model Loader and Predictor")
@@ -10,8 +11,7 @@ uploaded_file = st.file_uploader("Upload your CatBoost Model (.pkl)", type=["pkl
 
 if uploaded_file is not None:
     # Load the model
-    model = CatBoostRegressor()
-    model.load_model(uploaded_file)
+    model = joblib.load(uploaded_file)
 
     # Check if the loaded model is a CatBoostRegressor
     if not isinstance(model, CatBoostRegressor):
@@ -51,4 +51,4 @@ if uploaded_file is not None:
 
             # Display the prediction
             st.subheader("Prediction:")
-            st.write(f"**Water content:** {prediction[0]:.2f}")  # Display the prediction with 2 decimal places
+            st.write(f"**Water content:** {prediction[0]}")
